@@ -5,7 +5,9 @@ import App from "../App";
 import JobListing from "../StartDrive/JobListing";
 import StartNewdrive from "../StartDrive/StartNewdrive";
 import DriveDetails from "../StartDrive/Drivedetails"; // Make sure the import is consistent with the component's name
-import Updatedrive from "@/StartDrive/Updatedrive";
+import Updatedrive from "../StartDrive/Updatedrive";
+import Dynamicform from "../StartDrive/Dynamicform";
+import Dcsv from "../DownloadCSV/downloadCSV";
 import { getJobById } from '../api/api'; // Import the getJobById function from the API module
 
 const router = createBrowserRouter([
@@ -16,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true, // Default route for this level
         element: <JobListing />, // Component for the default route
+      },
+      {
+        path: 'csv',
+        element: <Dcsv />, // Route to start a new drive
       },
       {
         path: 'jobs',
@@ -52,7 +58,21 @@ const router = createBrowserRouter([
             throw error;
           }
         },
-      }
+      },
+      {
+         path: 'application/:id', // Dynamic route for editing company info
+        element: <Dynamicform/>,
+        loader: async ({ params }) => {
+          try {
+            // Fetch company info using the same function, assuming it matches the route's needs
+            const companyInfo = await getJobById(params.id); // Replace this with the appropriate API function if needed
+            return companyInfo; // Return the fetched data to the component
+          } catch (error) {
+            console.error('Error loading company info:', error);
+            throw error;
+          }
+      },
+    }
     ],
   }
 ]);

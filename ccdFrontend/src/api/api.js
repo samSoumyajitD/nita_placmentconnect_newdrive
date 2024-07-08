@@ -52,3 +52,23 @@ export const deleteJob = async (id) => {
     throw error;
   }
 };
+
+export const downloadCSV = async (attributes) => {
+  try {
+    const response = await axios.get(`${API_URL}/download-csv`, {
+      params: { attributes: attributes.join(',') },
+      responseType: 'blob',
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'jobs.csv');
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error('Error downloading CSV:', error);
+    throw error;
+  }
+};
+

@@ -1,3 +1,4 @@
+// index.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -6,6 +7,7 @@ const { addJob } = require('./jobController/addJob');
 const { getAllJobs, getJobById } = require('./jobController/getJobs');
 const { deleteJob } = require('./jobController/deleteJob');
 const { updateJob } = require('./jobController/updateJob');
+const { downloadCSV } = require('./jobController/downloadCSV');
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -26,6 +28,7 @@ app.get('/all-jobs', getAllJobs);
 app.get('/jobs/:id', getJobById);
 app.patch('/job/:id', updateJob);
 app.delete('/job/:id', deleteJob);
+app.get('/download-csv', downloadCSV); // Add this line
 
 async function startServer() {
   await connectMongoDB();

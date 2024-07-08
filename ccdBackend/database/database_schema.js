@@ -5,7 +5,7 @@ const schema = {
   required: [
     "company", "roles", "companyTier", "ctc", "roleType", "branchesAllowed",
     "degreesAllowed", "graduationYearsAllowed", "selectionProcess", "postDate",
-    "deadline",  "facultyCoordinator", "studentCoordinator"
+    "deadline", "facultyCoordinator", "studentCoordinator"
   ],
   properties: {
     company: {
@@ -14,11 +14,14 @@ const schema = {
     },
     roles: {
       bsonType: "array",
-      description: "Role offered"
+      items: {
+        bsonType: "string"
+      },
+      description: "Roles offered"
     },
     companyTier: {
       bsonType: "string",
-      description: "Tire level"
+      description: "Tier level"
     },
     ctc: {
       bsonType: "string",
@@ -54,18 +57,17 @@ const schema = {
       },
       description: "Degrees allowed"
     },
-    years: {
+    graduationYearsAllowed: {
       bsonType: "array",
       items: {
         bsonType: "int"
       },
       description: "Graduation years allowed"
     },
-    selectionDomCode: {
+    selectionProcess: {
       bsonType: "string",
-      description: "Selection Process"
+      description: "Selection process"
     },
-  
     noofgapYearsAllowed: {
       bsonType: "int",
       description: "Number of gap years allowed"
@@ -82,14 +84,13 @@ const schema = {
       bsonType: "date",
       description: "Post date"
     },
-    deadlineDateTime: {
+    deadline: {
       bsonType: "date",
       description: "Deadline to apply"
     },
-    
     jobDDomCode: {
-       bsonType: "string",
-      description: "jd"
+      bsonType: "string",
+      description: "Job description"
     },
     gender: {
       bsonType: "string",
@@ -103,7 +104,53 @@ const schema = {
       bsonType: "string",
       description: "Student coordinator"
     },
-    
+    fillfrom: {
+      bsonType: "array",
+      items: {
+        bsonType: "string"
+      },
+      description: "Fill from"
+    },
+    items: {
+      bsonType: "array",
+      items: {
+        bsonType: "object",
+        properties: {
+          key: {
+            bsonType: "string",
+            description: "Key"
+          },
+          values: {
+            bsonType: "array",
+            items: {
+              bsonType: "string"
+            },
+            description: "Values"
+          }
+        }
+      },
+      description: "Items"
+    },
+    mitems: {
+      bsonType: "array",
+      items: {
+        bsonType: "object",
+        properties: {
+          key: {
+            bsonType: "string",
+            description: "Key"
+          },
+          values: {
+            bsonType: "array",
+            items: {
+              bsonType: "string"
+            },
+            description: "Values"
+          }
+        }
+      },
+      description: "MItems"
+    }
   }
 };
 

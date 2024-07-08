@@ -162,6 +162,45 @@ const Updatedrive = () => {
  const handleRemoveItem = (indexToRemove) => {
    setItems(items.filter((_, index) => index !== indexToRemove));
  };
+// Multiple choice options
+const [mitems, setmItems] = useState([]);
+const [mkey, setmKey] = useState('');
+const [mvalue, setmValue] = useState('');
+const [mtempValues, setmTempValues] = useState([]);
+const [merror, setmError] = useState('');
+
+const handlemAddValue = () => {
+  if (mvalue.trim() === '') {
+    setmError('Value cannot be empty');
+    return;
+  }
+  setmTempValues([...mtempValues, mvalue]);
+  setmValue('');
+  setmError('');
+};
+
+const handlemRemoveValue = (indexToRemove) => {
+  setmTempValues(mtempValues.filter((_, mindex) => mindex !== indexToRemove));
+};
+
+const handlemAddItem = () => {
+  if (mkey.trim() === '') {
+    setmError('Key cannot be empty');
+    return;
+  }
+  if (mtempValues.length === 0) {
+    setmError('Values cannot be empty');
+    return;
+  }
+  setmItems([...mitems, { key: mkey, values: mtempValues }]);
+  setmKey('');
+  setmTempValues([]);
+  setmError('');
+};
+
+const handlemRemoveItem = (indexToRemove) => {
+  setmItems(mitems.filter((_, mindex) => mindex !== indexToRemove));
+};
 
  useEffect(() => {
    const fetchJob = async () => {
@@ -191,6 +230,7 @@ const Updatedrive = () => {
        setDeadlineDateTime(jobData.deadlineDateTime);
        setfillfrom(jobData.fillfrom || []);
        setItems(jobData.items || []);
+setmItems(jobData.mitems || []);
      } catch (error) {
        console.error('Error fetching job data:', error);
      }
@@ -237,6 +277,7 @@ const Updatedrive = () => {
      deadlineDateTime,
      fillfrom,
      items,
+     mitems
    };
 
    try {
@@ -773,117 +814,197 @@ const Updatedrive = () => {
       {showExtraInfo && (
         <div className="transition-height duration-300 mt-4">
           <div className="mt-6">
-            <Label htmlFor="fillfrom" className="font-semibold text-gray-800">Input Form Informations</Label>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {fillfrom.map((info) => (
-                <div
-                  key={info}
-                  className="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full shadow-sm"
-                >
-                  <span className="text-sm text-gray-800 font-medium">{info}</span>
-                  <Button
-                    type="button"
-                    onClick={() => removefillform(info)}
-                    className="text-white text-xs rounded-full"
-                  >
-                    &times;
-                  </Button>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-4 mt-2 w-full md:w-[500px]">
-              <Input
-                type="text"
-                id="graduationYear"
-                placeholder="Enter Attribute"
-                value={fillInput}
-                onChange={(e) => setfillInput(e.target.value)}
-                className="flex-1 border-gray-300 rounded-md shadow-sm"
-              />
+        <Label htmlFor="fillfrom" className="font-semibold text-gray-800">Input Form Informations</Label>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {fillfrom.map((info) => (
+            <div
+              key={info}
+              className="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full shadow-sm"
+            >
+              <span className="text-sm text-gray-800 font-medium">{info}</span>
               <Button
                 type="button"
-                onClick={addfillform}
-                className="rounded-[20px] text-[10px] font-[600]"
+                onClick={() => removefillform(info)}
+                className="text-white text-xs rounded-full"
               >
-                Add
+                &times;
               </Button>
             </div>
-          </div>
-          <div className="py-5">
-            <Label htmlFor="choice" className="font-semibold text-gray-800">Choice Form Informations</Label>
-            <div className="flex flex-col my-4 space-y-4">
-              <div className="flex flex-col space-y-2">
-                <Label htmlFor="key-input" className="font-semibold p-2 text-gray-800">Attribute</Label>
-                <Input
-                  id="key-input"
-                  type="text"
-                  placeholder="Key"
-                  value={key}
-                  onChange={(e) => setKey(e.target.value)}
-                  className="flex-1 w-[50%] border-gray-300 rounded-md shadow-sm"
-                />
-                {error.includes('Key') && <div className="text-red-500 text-sm">{error}</div>}
-              </div>
-              <div className="flex flex-col space-y-2">
-                <Label htmlFor="value-input" className="font-semibold p-2 text-gray-800">Options</Label>
-                <div className="flex space-x-2">
-                  <Input
-                    id="value-input"
-                    type="text"
-                    placeholder="Value"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    className="w-[50%]"
-                  />
-                  <Button type="button" onClick={handleAddValue} className="rounded-[20px] text-[10px] font-[600] text-white">
-                    Add
-                  </Button>
-                </div>
-                {error.includes('Value') && <div className="text-red-500 text-sm">{error}</div>}
-              </div>
-            </div>
-            {tempValues.length > 0 && (
-              <div className="mb-4">
-                <strong className="block mb-2">Current Values:</strong>
-                <div className="flex flex-wrap">
-                  {tempValues.map((val, index) => (
-                    <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
-                      <span>{val}</span>
-                      <Button
-                        type="button"
-                        onClick={() => handleRemoveValue(index)}
-                        className="ml-2 text-white text-xs rounded-full hover:text-red-700"
-                      >
-                        &times;
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            <Button type="button" onClick={handleAddItem} className="w-[200px] text-white">
-              Add Item
-            </Button>
-            {error && <div className="mt-4 text-red-500">{error}</div>}
-            <div className="mt-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
-              <div className="flex flex-wrap">
-                {items.map((item, index) => (
-                  <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
-                    <span className="mr-2 gap-2">{item.key} - {item.values.join(', ')}</span>
-                    <Button
-                      type="button"
-                      onClick={() => handleRemoveItem(index)}
-                      className="ml-2 text-white text-xs rounded-full hover:text-red-700"
-                    >
-                      &times;
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
+        <div className="flex items-center gap-4 mt-2 w-full md:w-[500px]">
+          <Input
+            type="text"
+            id="graduationYear"
+            placeholder="Enter Attribute"
+            value={fillInput}
+            onChange={(e) => setfillInput(e.target.value)}
+            className="flex-1 border-gray-300 rounded-md shadow-sm"
+          />
+          <Button
+            type="button"
+            onClick={addfillform}
+          className="rounded-[20px] text-[10px] font-[600]"
+          >
+            Add
+          </Button>
+        </div>
+      </div>
+
+      <div className="py-5">
+  <div className="mb-8">
+    <Label htmlFor="choice" className="font-semibold text-gray-800">Single Choice Form Information</Label>
+    <div className="flex flex-col my-4 space-y-4">
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="key-input" className="font-semibold p-2 text-gray-800">Attribute</Label>
+        <Input
+          id="key-input"
+          type="text"
+          placeholder="Key"
+          value={key}
+          onChange={(e) => setKey(e.target.value)}
+          className="flex-1 w-[50%] border-gray-300 rounded-md shadow-sm"
+        />
+        {error.includes('Key') && <div className="text-red-500 text-sm">{error}</div>}
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="value-input" className="font-semibold p-2 text-gray-800">Options</Label>
+        <div className="flex space-x-2">
+          <Input
+            id="value-input"
+            type="text"
+            placeholder="Value"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className="w-[50%]"
+          />
+          <Button type="button" onClick={handleAddValue} className="rounded-[20px] text-[10px] font-[600] text-white">
+            Add
+          </Button>
+        </div>
+        {error.includes('Value') && <div className="text-red-500 text-sm">{error}</div>}
+      </div>
+    </div>
+    {tempValues.length > 0 && (
+      <div className="mb-4">
+        <strong className="block mb-2">Current Values:</strong>
+        <div className="flex flex-wrap">
+          {tempValues.map((val, index) => (
+            <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
+              <span>{val}</span>
+              <Button
+                type="button"
+                onClick={() => handleRemoveValue(index)}
+                className="ml-2 text-white text-xs rounded-full hover:text-red-700"
+              >
+                &times;
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+    <Button type="button" onClick={handleAddItem} className="w-[200px] text-white">
+      Add Item
+    </Button>
+    {error && <div className="mt-4 text-red-500">{error}</div>}
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
+      <div className="flex flex-wrap">
+        {items.map((item, index) => (
+          <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
+            <span className="mr-2 gap-2">{item.key} - {item.values.join(', ')}</span>
+            <Button
+              type="button"
+              onClick={() => handleRemoveItem(index)}
+              className="ml-2 text-white text-xs rounded-full hover:text-red-700"
+            >
+              &times;
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div className="mb-8">
+    <Label htmlFor="choice" className="font-semibold text-gray-800">Multi Choice Form Information</Label>
+    <div className="flex flex-col my-4 space-y-4">
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="mkey-input" className="font-semibold p-2 text-gray-800">Attribute</Label>
+        <Input
+          id="mkey-input"
+          type="text"
+          placeholder="Key"
+          value={mkey}
+          onChange={(e) => setmKey(e.target.value)}
+          className="flex-1 w-[50%] border-gray-300 rounded-md shadow-sm"
+        />
+        {merror.includes('Key') && <div className="text-red-500 text-sm">{merror}</div>}
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="mvalue-input" className="font-semibold p-2 text-gray-800">Options</Label>
+        <div className="flex space-x-2">
+          <Input
+            id="mvalue-input"
+            type="text"
+            placeholder="Value"
+            value={mvalue}
+            onChange={(e) => setmValue(e.target.value)}
+            className="w-[50%]"
+          />
+          <Button type="button" onClick={handlemAddValue} className="rounded-[20px] text-[10px] font-[600] text-white">
+            Add
+          </Button>
+        </div>
+        {merror.includes('Value') && <div className="text-red-500 text-sm">{merror}</div>}
+      </div>
+    </div>
+    {mtempValues.length > 0 && (
+      <div className="mb-4">
+        <strong className="block mb-2">Current Values:</strong>
+        <div className="flex flex-wrap">
+          {mtempValues.map((val, index) => (
+            <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
+              <span>{val}</span>
+              <Button
+                type="button"
+                onClick={() => handlemRemoveValue(index)}
+                className="ml-2 text-white text-xs rounded-full hover:text-red-700"
+              >
+                &times;
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+    <Button type="button" onClick={handlemAddItem} className="w-[200px] text-white">
+      Add Item
+    </Button>
+    {merror && <div className="mt-4 text-red-500">{merror}</div>}
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-2">Items</h2>
+      <div className="flex flex-wrap">
+        {mitems.map((item, index) => (
+          <div key={index} className="inline-flex items-center bg-gray-200 px-4 py-2 m-1 rounded-full">
+            <span className="mr-2 gap-2">{item.key} - {item.values.join(', ')}</span>
+            <Button
+              type="button"
+              onClick={() => handlemRemoveItem(index)}
+              className="ml-2 text-white text-xs rounded-full hover:text-red-700"
+            >
+              &times;
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+        </div>
+        
       )}
     </div>
   
