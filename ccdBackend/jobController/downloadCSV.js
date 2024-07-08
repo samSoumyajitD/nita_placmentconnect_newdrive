@@ -27,19 +27,15 @@ async function downloadCSV(req, res) {
       branchesAllowed: 'Branches Allowed',
       degreesAllowed: 'Degrees Allowed',
       graduationYearsAllowed: 'Graduation Years Allowed',
-      selectionProcess: 'Selection Process',
-      noofgapYearsAllowed: 'Number of Gap Years Allowed',
-      allowBackloghis: 'Allow Backlog History',
-      activeBacklogsAllowed: 'Active Backlogs Allowed',
-      postDate: 'Post Date',
-      deadline: 'Deadline',
-      jobDDomCode: 'Job Description',
+  
+      
+ 
       gender: 'Gender',
-      facultyCoordinator: 'Faculty Coordinator',
-      studentCoordinator: 'Student Coordinator',
+     
       fillfrom: 'Fill From',
       items: 'Items',
       mitems: 'MItems',
+
     };
 
     // Filter the schema based on selected attributes

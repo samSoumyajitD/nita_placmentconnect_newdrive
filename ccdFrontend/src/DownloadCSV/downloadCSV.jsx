@@ -48,17 +48,6 @@ const Dcsv = () => {
         <div className="bg-white shadow rounded-lg mx-10 px-10 py-6">
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     
-    <div className="flex items-center space-x-2">
-      <label htmlFor="attribute-1" className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          value="_id"
-          onChange={handleAttributeChange}
-          className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-        />
-        <span className="text-gray-700">ID</span>
-      </label>
-    </div>
     
     <div className="flex items-center space-x-2">
       <label htmlFor="attribute-2" className="flex items-center space-x-2">
@@ -68,7 +57,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Company</span>
+        <span className="text-gray-700 font-semibold">Company</span>
       </label>
     </div>
     
@@ -80,7 +69,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Roles</span>
+        <span className="text-gray-700 font-semibold">Roles</span>
       </label>
     </div>
     
@@ -92,7 +81,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Company Tier</span>
+        <span className="text-gray-700 font-semibold">Company Tier</span>
       </label>
     </div>
     
@@ -104,7 +93,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">10th Marks Required</span>
+        <span className="text-gray-700 font-semibold">10th Marks Required</span>
       </label>
     </div>
     
@@ -116,7 +105,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">12th Marks Required</span>
+        <span className="text-gray-700 font-semibold">12th Marks Required</span>
       </label>
     </div>
     
@@ -128,7 +117,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">CGPA</span>
+        <span className="text-gray-700 font-semibold">CGPA</span>
       </label>
     </div>
     
@@ -140,7 +129,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Branches Allowed</span>
+        <span className="text-gray-700 font-semibold">Branches Allowed</span>
       </label>
     </div>
     
@@ -152,7 +141,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Degrees Allowed</span>
+        <span className="text-gray-700 font-semibold">Degrees Allowed</span>
       </label>
     </div>
     
@@ -164,7 +153,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Graduation Years Allowed</span>
+        <span className="text-gray-700 font-semibold">Graduation Years Allowed</span>
       </label>
     </div>
     
@@ -176,7 +165,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Number of Gap Years Allowed</span>
+        <span className="text-gray-700 font-semibold">Number of Gap Years Allowed</span>
       </label>
     </div>
     
@@ -188,7 +177,7 @@ const Dcsv = () => {
           onChange={handleAttributeChange}
           className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
         />
-        <span className="text-gray-700">Allow Backlog History</span>
+        <span className="text-gray-700 font-semibold">Allow Backlog History</span>
       </label>
     </div>
     
