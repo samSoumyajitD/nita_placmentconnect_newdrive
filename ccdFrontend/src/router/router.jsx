@@ -8,15 +8,41 @@ import DriveDetails from "../StartDrive/Drivedetails"; // Make sure the import i
 import Updatedrive from "../StartDrive/Updatedrive";
 import Dynamicform from "../StartDrive/Dynamicform";
 import Dcsv from "../DownloadCSV/downloadCSV";
+import Login from "../LoginSignup/login";
+import Signup from "../LoginSignup/signup";
+import LogoutButton from "@/LoginSignup/logout";
+import Forgetpassword from "@/LoginSignup/forgetpass";
+import ResetPassword from "@/LoginSignup/resetPassword";
 import { getJobById } from '../api/api'; // Import the getJobById function from the API module
+
+
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      { index: true, // Default route for this level
+        element: <Login />
+      },
       {
-        index: true, // Default route for this level
+        path:'signup',
+        element:<Signup/>
+      },
+      {
+        path:'forgot-password',
+        element:<Forgetpassword/>
+      },
+      {
+        path:'reset-password/:token',
+        element:<ResetPassword/>
+      },
+      {
+        path: 'logout', // Default route for this level
+        element: <LogoutButton />, // Component for the default route
+      },
+      {
+        path: 'joblist', // Default route for this level
         element: <JobListing />, // Component for the default route
       },
       {

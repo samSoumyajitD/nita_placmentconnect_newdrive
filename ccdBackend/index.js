@@ -8,6 +8,7 @@ const { getAllJobs, getJobById } = require('./jobController/getJobs');
 const { deleteJob } = require('./jobController/deleteJob');
 const { updateJob } = require('./jobController/updateJob');
 const { downloadCSV } = require('./jobController/downloadCSV');
+const { signUp, login, requestPasswordReset, resetPassword } = require('./useController/userController');
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -28,8 +29,14 @@ app.get('/all-jobs', getAllJobs);
 app.get('/jobs/:id', getJobById);
 app.patch('/job/:id', updateJob);
 app.delete('/job/:id', deleteJob);
-app.get('/download-csv', downloadCSV); // Add this line
+app.get('/download-csv', downloadCSV);
 
+// User routes
+app.post('/sign-up', signUp);
+app.post('/login', login);
+// Password reset routes
+app.post('/request-password-reset', requestPasswordReset);
+app.post('/reset-password/:token', resetPassword);
 async function startServer() {
   await connectMongoDB();
 
